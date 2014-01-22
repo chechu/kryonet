@@ -383,6 +383,12 @@ public class Client extends Connection implements EndPoint {
 		if (TRACE) trace("kryonet", "Client thread stopping.");
 		shutdown = true;
 		selector.wakeup();
+		try {
+			selector.close();
+		} catch (IOException ignored) {
+			System.err.println("Error closing selector...");
+			ignored.printStackTrace();
+		}
 	}
 
 	public void close () {
